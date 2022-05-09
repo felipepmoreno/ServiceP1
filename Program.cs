@@ -21,6 +21,9 @@ namespace ServiceP1
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+#if DEBUG
+                    webBuilder.UseUrls("https://localhost:5000");
+#endif
                 });
     }
 }
