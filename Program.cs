@@ -23,6 +23,8 @@ namespace ServiceP1
                     webBuilder.UseStartup<Startup>();
 #if DEBUG
                     webBuilder.UseUrls("https://localhost:5000");
+#else
+                    webBuilder.UseUrls(https://servicep1.azurewebsites.net");
 #endif
                 });
     }
