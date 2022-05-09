@@ -34,7 +34,11 @@ namespace ServiceP1.Controllers
                 model.code = random.Next(10000000) + 10000000;
 
                 var jsonModel = JsonConvert.SerializeObject(model);
+#if DEBUG
                 var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:5001/api/p2/validate");
+#else
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://servicep2.azurewebsites.net/api/p2/validate");
+#endif
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 request.Content = new StringContent(jsonModel, Encoding.UTF8);
                 request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
