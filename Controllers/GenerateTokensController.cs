@@ -52,7 +52,8 @@ namespace ServiceP1.Controllers
                 var response = client.SendAsync(request).Result;
                 var content = response.Content.ReadAsStringAsync().Result;
 
-                tokensList.Add(content + " (tempo de geração - " + stopwatchMicro.ElapsedMilliseconds.ToString() + " milissegundos).");
+                tokensList.Add("Números gerados: n = " + model.n + " e code = " + model.code  + content + 
+                    " (tempo de geração - " + stopwatchMicro.ElapsedMilliseconds.ToString() + " milissegundos).\n");
 
                 stopwatchMicro.Stop();
                 stopwatchMicro.Reset();
