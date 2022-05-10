@@ -18,18 +18,24 @@ namespace ServiceP1.Controllers
     {
         public HttpClient client = new HttpClient();
         public List<string> tokensList = new List<string>();
+        public List<string> ProcessesTimeList = new List<string>();
         public Random random = new Random();
         public P1BodyModel model = new P1BodyModel();
         public int count = 0;
-        public Stopwatch stopwatch;
+        public Stopwatch stopwatchMacro;
+        public Stopwatch stopwatchMicro;
 
         [HttpGet]
         public async Task<List<string>> P1CreateHashes()
         {
-            stopwatch = new Stopwatch();
-            stopwatch.Start();
-            while (stopwatch.ElapsedMilliseconds < 4850)
+            stopwatchMacro = new Stopwatch();
+            stopwatchMicro = new Stopwatch();
+
+            stopwatchMacro.Start();
+            while (stopwatchMacro.ElapsedMilliseconds < 4850)
             {
+                stopwatchMicro.Start();
+
                 model.n = random.Next(5000, 15000);
                 model.code = random.Next(10000000) + 10000000;
 
@@ -45,12 +51,15 @@ namespace ServiceP1.Controllers
 
                 var response = client.SendAsync(request).Result;
                 var content = response.Content.ReadAsStringAsync().Result;
-                tokensList.Add(content);
+
+                tokensList.Add(content + " (tempo de geração - " + stopwatchMicro.ElapsedMilliseconds.ToString() + " milissegundos).");
+
+                stopwatchMicro.Stop();
+                stopwatchMicro.Reset();
             }
-            Console.WriteLine("Estes Hashes foram gerados em: " + stopwatch.ElapsedMilliseconds.ToString());
-            tokensList.Add("Estes Hashes foram gerados em: " + stopwatch.ElapsedMilliseconds.ToString());
-            stopwatch.Stop();
-            Console.WriteLine("Foram geradas " + tokensList.Count() + " hashes");
+            stopwatchMacro.Stop();
+            tokensList.Add((tokensList.Count() / 2).ToString() + " foram gerados em: " + stopwatchMacro.ElapsedMilliseconds.ToString());
+            
             return tokensList;
         }
     }
