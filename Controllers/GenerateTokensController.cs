@@ -59,7 +59,7 @@ namespace ServiceP1.Controllers
                 stopwatchMicro.Reset();
             }
             stopwatchMacro.Stop();
-            tokensList.Add((tokensList.Count() / 2).ToString() + " foram gerados em: " + stopwatchMacro.ElapsedMilliseconds.ToString());
+            tokensList.Add((tokensList.Count() - 1).ToString() + " foram gerados em: " + stopwatchMacro.ElapsedMilliseconds.ToString());
             
             return tokensList;
         }
