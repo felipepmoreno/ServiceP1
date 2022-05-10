@@ -28,7 +28,7 @@ namespace ServiceP1.Controllers
         {
             stopwatch = new Stopwatch();
             stopwatch.Start();
-            while (stopwatch.ElapsedMilliseconds < 5000)
+            while (stopwatch.ElapsedMilliseconds < 4850)
             {
                 model.n = random.Next(5000, 15000);
                 model.code = random.Next(10000000) + 10000000;
@@ -47,6 +47,7 @@ namespace ServiceP1.Controllers
                 var content = response.Content.ReadAsStringAsync().Result;
                 tokensList.Add(content);
             }
+            Console.WriteLine("Tempo de execução: " + stopwatch.ElapsedMilliseconds.ToString());
             stopwatch.Stop();
             Console.WriteLine("Foram geradas " + tokensList.Count() + " hashes");
             return tokensList;
